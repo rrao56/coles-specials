@@ -1,4 +1,4 @@
-name: 'Terraform'
+name: 'Terraform Infra Deploy'
 on: [push, pull_request]
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
     - name: Terraform Init
-      run: terraform init -backend-config="storage_account_name=colestfstateacc3786" -backend-config="container_name=colestfstate" -backend-config="resource_group_name=ColesTFStateRG" -backend-config="key=colestf.tfstate" -backend-config="sas_token=$TF_STATE_BLOB_SAS_TOKEN"
+      run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=$TF_STATE_BLOB_FILE" -backend-config="sas_token=$TF_STATE_BLOB_SAS_TOKEN"
       working-directory: "./main"
       env:
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID}}
